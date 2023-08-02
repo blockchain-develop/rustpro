@@ -6,7 +6,10 @@ fn main() {
     fn5();
     fn6();
     fn7();
+    fn8();
     fn9();
+    fn10();
+    fn11();
 }
 
 fn fn1() {
@@ -93,7 +96,7 @@ fn fn7() {
 fn fn8() {
     let value = 5;
     match value {
-        x => println!("{}", x),
+        x if x < 6 => println!("{}", x),
         _ => println!("other"),
     }
     println!("value: {}", value);
@@ -108,4 +111,31 @@ fn fn9() {
         }
     }
     println!("value: {:?}", mut_value);
+}
+
+fn fn10() {
+    struct Foo {x: (u32, u32), y: u32}
+    //
+    let foo = Foo {x: (1, 2), y: 3};
+    let Foo{x: (a, b), y} = foo;
+    println!("a = {}, b = {}, y = {}", a, b, y);
+
+    //
+    let Foo {y: i, x: j} = foo;
+    println!("i = {:?}, j = {:?}", i, j);
+
+    //
+    let Foo {y, ..} = foo;
+    println!("y = {}", y);
+}
+
+fn fn11() {
+    let pair = (2, -2);
+    println!("tell me {:?}", pair);
+    match pair {
+        (x, y) if x == y => println!("twins"),
+        (x, y) if x + y == 0 => println!("kaboom"),
+        (x, _) if x % 2 == 0 => println!("odd"),
+        _ => println!("no......"),
+    }
 }
