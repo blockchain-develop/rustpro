@@ -46,6 +46,22 @@ fn op(x: f64, y: f64) -> f64 {
     }
 }
 
+fn op_(x: f64, y: f64) -> checked::MathResult {
+    let ratio = checked::div(x, y)?;
+    let ln = checked::ln(ratio)?;
+    checked::sqrt(ln)
+}
+
 fn main() {
-    println!("{}", op(1.0, 10.0));
+    //println!("{}", op(1.0, 10.0));
+
+    //
+    match op_(1.0, 10.0) {
+        Err(why) => panic!("{}", match why {
+            checked::MathError::NegativeLogarithm => "logarithm of negative number",
+            checked::MathError::DivisionByZero => "division by zero",
+            checked::MathError::NegativeSquareRoot => "square root of negative number",
+        }),
+        Ok(value) => println!("{}", value),
+    }
 }
